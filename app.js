@@ -1,11 +1,13 @@
 //BUDGET CONTROLLER
 var budgetController = (function(){
-    var Expense = function(id, description, value){
+    var Expense = function(type,id, description, value){
+        this.type = type;
         this.id = id;
         this.description = description;
         this.value = value;
     };
-    var Income = function(id, description, value){
+    var Income = function(type, id, description, value){
+        this.type = type;
         this.id = id;
         this.description = description;
         this.value = value;
@@ -36,10 +38,10 @@ var budgetController = (function(){
             
             //Create new item based on 'inc' or 'exp' type
             if(type === 'exp'){
-                newItem = new Expense(ID, des, val);
+                newItem = new Expense(type, ID, des, val);
             }
             else if(type === 'inc') {
-                newItem = new Income(ID, des, val);
+                newItem = new Income(type,ID, des, val);
             }
             data.allItems[type].push(newItem);
             //Return new element
@@ -73,14 +75,15 @@ var UIController = (function(){
         addListItem:function(obj, type){
         var html, newHtml;
             //Create HTML strings with place holder text
-        if(type === 'inc'){ 
-            element = DOMstrings.incomeContainer;
-            html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
-        }
-        else if( type === 'exp'){
+        if(type == 'inc'){ 
+             element = DOMstrings.incomeContainer;
+             html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+         }
+        else if( type == 'exp'){
             element = DOMstrings.expenseContainer;
             html = '<div class="item clearfix" id="expense-%d%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
         }
+        console.log(type);
         console.log(html);
             //Replace Place Holder text with actual data
         newHtml = html.replace('%id%', obj.id);
