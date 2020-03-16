@@ -52,7 +52,7 @@ var budgetController = (function(){
                 newItem = new Expense(type, ID, des, val);
             }
             else if(type === 'inc') {
-                newItem = new Income(type,ID, des, val);
+                newItem = new Income(type, ID, des, val);
             }
             data.allItems[type].push(newItem);
             //Return new element
@@ -153,7 +153,13 @@ var UIController = (function(){
              document.querySelector(DOMstrings.budgetContainer).textContent = obj.budget;
              document.querySelector(DOMstrings.incomeContainerValue).textContent = obj.totalIncome;
              document.querySelector(DOMstrings.expenseContainerValue).textContent = obj.totalExpense;
-             document.querySelector(DOMstrings.expensePercentageContainer).textContent = obj.percent;
+             if(obj.percent > 0) {
+                document.querySelector(DOMstrings.expensePercentageContainer).textContent = obj.percent + '%';
+             }
+             else{
+                document.querySelector(DOMstrings.expensePercentageContainer).textContent = '---'
+             }
+             
         },
 
         getDOMstrings: function(){
@@ -206,6 +212,12 @@ var controller = (function(budgetCtrl, UICtrl){
     return {
         init: function(){
             console.log('Application started');
+            UICtrl.displayBudget({
+                budget: 0,
+                totalIncome: 0,
+                totalExpense: 0,
+                percent: -1
+            });
             setUpEventListeners();
         }
     };
