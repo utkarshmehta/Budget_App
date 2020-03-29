@@ -146,6 +146,7 @@ var UIController = (function(){
             html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
         }
             //Replace Place Holder text with actual data
+        //obj.value = '$' + obj.value;    //Add $ in front of value/cost
         newHtml = html.replace('%id%', obj.id);
         newHtml = newHtml.replace('%description%', obj.description);
         newHtml = newHtml.replace('%value%', obj.value);
@@ -194,7 +195,7 @@ var controller = (function(budgetCtrl, UICtrl){
     var setUpEventListeners = function(){
         var DOM = UIController.getDOMstrings();
         document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
-        document.addEventListener('keypress', function($event){
+        document.addEventListener('keydown', function($event){
             if($event.keyCode === 13 || $event.which === 13 ){
                 ctrlAddItem();
             }
